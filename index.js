@@ -9,7 +9,6 @@ const authenticationUser = require("./routes/authentication");
 const cors = require("cors");
 
 dotenv.config();
-
 // mongoDb database liniking
 moongose
 .connect(process.env.MONGO_URL)
@@ -21,7 +20,6 @@ app.use(cors());
 // routs liniking and using
 app.use(express.json());
 app.use("/api/auth", authenticationUser);
-//app.use("/api/cart", cartRoute);
 
 //Server connection
 app.listen(process.env.PORT || 5000,() =>{

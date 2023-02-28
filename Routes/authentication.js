@@ -1,6 +1,8 @@
 // User login and register file 
 const router = require("express").Router();
 const user = require("../Models/USER");
+const JsonWebToken = require("jsonwebtoken");
+
 // New user registration
 
 // user Login (user request like typing email or username (req) server respone (res))
@@ -11,8 +13,14 @@ router.post("login", async (req, res)=>{
         const userPassword = userInfo.password;
         if(userPassword == req.body.password && userInfo.email == req.body.email) {
             // 3. User id verification using JWT
+            const verifingToken = JsonWebToken.sign(
+                {
+                    id: user._id,
+                    isAdmine: user.isAdmine,
+                },process.env.JWT_SECRET_KEY,{expiresIn:"3d"}
+            );
         // 4. Sending user information
-        res.status(200).json({userInfo});
+        res.status(200).json(userInfo);
         }else{
          res.status(401);
          //res.status(401).json("Wrong email or password");
